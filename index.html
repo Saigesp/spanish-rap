@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Spanish Rap - dadasign</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+    <meta name="google-site-verification" content="c8vISAe0OW2KHpalF1GAtepsgthXpXFYUb6BsVQeC-Q">
+    <!-- styles -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800,900|Source+Sans+Pro" rel="stylesheet">
+    <!-- scripts -->
+    <script src="assets/js/d3.v3.min.js"></script>
+</head>
+
+<body>
+    <div class="body-wrap">
+        <div class="topbar js-load loaded">
+        </div>
+        <div class="main js-load loaded">
+            <div class="wrap">
+                <div class="type-post dataviz hentry datavizhiphop">
+                    <div id="dataviztitle">
+                        <h2 class="p1">EL MAYOR VOCABULARIO</h2>
+                        <h2 class="p2">DEL HIP HOP ESPAÑOL</h2>
+                    </div>
+                    <p>Después de descubrir esta maravillosa <a href="http://experiments.undercurrent.com/">visualización</a> de <a href="http://www.mdaniels.com/">Matt Daniels</a>, donde compara el vocabulario de Shakespeare con el de raperos estadounidenses, decidí intentar hacer lo mismo, pero con los de esta gran piel de toro llamada España y con ese gran maestro llamado Cervantes.</p>
+                    <p>Ya que no todos los raperos tienen el mismo recorrido, para poder compararlos he empleado varias métricas: palabras únicas en las primeras 5.000 palabras, palabras únicas en toda su obra (accesible), y ratio de palabras únicas versus totales.</p>
+                    <p>Antes de presentar los resultados, es necesario especificar que los datos obtenidos son solo una aproximación, ya que se dan muchas circustancias donde pueden producirse incorrecciones. Por ejemplo, las palabras <em>MC</em> y <em>emcee</em> se contabilizan como dos palabras distintas, y de igual manera ocurre con expresiones como <em>ajá</em> y <em>ahá</em> o abreviaciones (<em>pa</em> por <em>para</em>). Además, las fuentes de donde se han sacado las letras no son del todo fiables, ya que son compartidas por diversas personas que, por ejemplo, usan a su antojo las reglas de puntuación. Para minimizar estos últimos problemas, se han eliminado todos los signos de puntuación, así como acentos, apóstrofes, y otros signos ortotipográficos.</p>
+                    <p>Se han eliminado también los estribillos de las canciones, ya que distorsionaban mucho la métrica y realmente no aportaban información sobre la complejidad de las letras de cada autor.</p>
+                    <p>Las herramientas empleadas han sido <a href="http://es.wikipedia.org/wiki/Python">Python</a>, para la recolección y análisis de datos, y <a href="http://en.wikipedia.org/wiki/D3.js">D3.js</a> para su representación.</p>
+                </div>
+            </div>
+            <div id="rapper-circles" class="grafico">
+                <div class="hidden tooltip tooltipcircle">
+                    <div class="rapperhead">
+                        <p><span id="rapper">Nombre</span></p>
+                    </div>
+                    <div class="valuehead">
+                        <div id="valueamount">
+                            <p><span id="value">0</span></p>
+                        </div>
+                        <div id="valuelabel">
+                            <p>palabras únicas</p>
+                        </div>
+                    </div>
+                </div>
+                <h2 class="p4">PALABRAS ÚNICAS EN LAS PRIMERAS 5.000 PALABRAS</h2>
+                <div class="toggles toggles-bubbles">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default allselect" style="height: 35px;">Todos</button>
+                        <button type="button" class="btn btn-default regionselect" style="height: 35px;">Por region</button>
+                    </div>
+                    <img src="assets/img/leyenda.png" style="position: absolute; display:none;" class="leyenda">
+                </div>
+                <svg></svg>
+            </div>
+            <div class="wrap dataviz datavizhiphop">
+                <p>En este gráfico se ponderan todos los raperos bajo el mismo ratio de palabras contadas (5.000) Es un número bajo, pero permite incluir raperos cuyas letras no son del todo accesibles en internet. Destacan especialmente Sicario, Capaz y Rayka, de Hablando en plata, que se adelantan al resto con bastante diferencia, siendo superados solo por Nega, de Los Chikos del Maíz. También hay que destacar que los raperos más prolíficos, como Nach o Porta (ver gráfico siguiente) obtienen muy malos resultados al ser ponderados con el mismo número de palabras.</p>
+                <p>La gran mayoría de raperos supera ampliamente el vocabulario de El Quijote (1.488 palabras únicas en las primeras 5.000 palabras), si bien este número se reduce si se compara con Zalacaín el Aventurero, de Pío Bajora (con 1.653 palabras en esta escala). Otras obras que he usado para la comparación arrojaban datos similares (1745 para Trafalgar o 1474 para El lazarillo de Tormes) y cuando se ha aumentado la base de palabras totales a 15.000 (en vez de las 5.000 que se muestran) la proporción de raperos que lo superaba era parecida.</p>
+                <p>Como curiosidad, se puede observar perfectamente cómo la cabeza del "pelotón" está gobernada por Andalucía, mientras que en la cola únicamente encontramos raperos procedentes de la Comunidad de Madrid. Y aunque no debería sorprender a nadie, agrada verlo constatado.</p>
+            </div>
+            <div id="scalerplot" class="grafico">
+                <div class="hidden tooltip tooltipscaler">
+                    <div class="rapperhead">
+                        <p><span id="rapper">Nombre</span></p>
+                    </div>
+                    <div class="valuehead">
+                        <div id="valueamount">
+                            <p><span id="value">0</span></p>
+                        </div>
+                        <div id="valuelabel">
+                            <p>palabras únicas</p>
+                        </div>
+                    </div>
+                    <div class="valuehead">
+                        <div id="valueamount2">
+                            <p><span id="value2">0</span></p>
+                        </div>
+                        <div id="valuelabel2">
+                            <p>palabras totales</p>
+                        </div>
+                    </div>
+                </div>
+                <h2 class="p4">PALABRAS ÚNICAS / TOTALES</h2>
+                <div class="toggles toggles-scaler">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default allselect" style="height: 35px;">Todos</button>
+                        <button type="button" class="btn btn-default regionselect" style="height: 35px;">Por region</button>
+                    </div>
+                    <img src="assets/img/leyenda.png" style="position: absolute; display:none;" class="leyenda">
+                </div>
+            </div>
+            <!-- Desarrollo -->
+            <div class="wrap dataviz datavizhiphop">
+                <p>Teniendo en cuenta toda la obra producida (y accesible) se ha generado este gráfico, en el que se puede observar una perfecta correlación entre el número de palabras totales y el número de palabras únicas. De media, los raperos emplean unas 200 palabras nuevas por cada 1000 palabras en sus canciones.</p>
+                <p>Nach se lleva el gran premio, con más de 80.000 palabras generadas (sin estribillos), aunque solo unas 12.000 únicas. Los andaluces, a excepción de Zatu, tienen una obra más pequeña que el resto de raperos. Igual pasa con los aragoneses, donde únicamente Rapsus supera las 30.000 palabras.</p>
+                <p>Es importante remarcar que el número de palabras totales no depende tanto de cuán prolífico es el rapero, si no de cuantos <em>groupies</em> tiene que hayan gastado su tiempo escribiendo sus letras en alguna página de internet. De ahí que Porta y Nach sean los que aparezcan con más palabras totales, cuando muy posiblemente haya otros con más obras publicadas.</p>
+            </div>
+            <div id="barplot" class="grafico">
+                <h2 class="p4">PORCENTAJE PALABRAS ÚNICAS / TOTALES</h2>
+                <div class="toggles toggles-scaler"></div>
+            </div>
+            <div class="wrap dataviz datavizhiphop">
+                <p>Esta gráfica nos muestra de manera relativa a cada autor el número de palabras únicas entre el total de su obra. Si bien es cierto que esto perjudica a los autores con más obra analizada, se dan casos curiosos como la caida del Nega hasta el 6º lugar o el sorprendente ratio de Sicario, que comprobado una y otra vez, arroja casi un 50% de palabras únicas.</p>
+            </div>
+            <div class="wrap dataviz datavizhiphop">
+                <svg id="group1" class="rapper-detail">
+                    <line x1="20%" y1="20" x2="80%" y2="20" />
+                    <circle r="15" cx="351" cy="20" class="rapper-circle" style="fill: url(#Sicario);"></circle>
+                    <circle r="15" cx="385" cy="20" class="rapper-circle" style="fill: url(#Rayka);"></circle>
+                    <circle r="15" cx="419" cy="20" class="rapper-circle" style="fill: url(#Capaz);"></circle>
+                </svg>
+                <h3 class="grouptitle">Hablando en plata</h3>
+                <p>Ha sido el grupo revelación en estos gráficos, ocupando en conjunto tres de los cuatro primeros puestos. Aunque son bastante conocidos dentro del género por sus letras oscuras, seguramente pocos hubiesen esperado tener posiciones tan altas en cuanto a variedad de vocabulario, pero lo cierto es que en sus canciones abundan palabras poco comunes en otros autores (<em>como entrar en los paritorios y convertirlos en cementerios, estrangulando bebés en sus cordones umbilicales, y después tatuarles tribales triturarles i love canibales</em>)</p>
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Total</th>
+                        <th>% Total</th>
+                        <th>Únicas</th>
+                        <th>% Únicas</th>
+                    </tr>
+                    <tr>
+                        <th>Capaz</th>
+                        <td>6109</td>
+                        <td>37,08%</td>
+                        <td>2410</td>
+                        <td>39,45%</td>
+                    </tr>
+                    <tr>
+                        <th>Rayka</th>
+                        <td>5022</td>
+                        <td>30,48%</td>
+                        <td>1922</td>
+                        <td>38,27%</td>
+                    </tr>
+                    <tr>
+                        <th>Sicario</th>
+                        <td>5344</td>
+                        <td>32,43%</td>
+                        <td>2316</td>
+                        <td>43,34%</td>
+                    </tr>
+                </table>
+                <p>Contando los datos relativos del grupo, Capaz hace la mayor aportación con un 37,08%, pero con un ratio propio de palabras únicas inferior al de Sicario, que aunque aporta un 32,43% obtiene casi tantas palabras únicas como Capaz. Respecto a las palabras más usadas, llama la atención <em>veneno</em>, la cual no aparece en posiciones altas ningún otro grupo o cantante.</p>
+                <p>Palabras más repetidas: rap (43), somos (39), bien (37), tengo (26), siempre (25), todo (25), plata (24), hace (23), veneno (23), tiempo (23).</p>
+                <svg id="group2" class="rapper-detail">
+                    <line x1="20%" y1="20" x2="80%" y2="20" />
+                    <circle r="15" cx="368" cy="20" class="rapper-circle" style="fill: url(#Nega);"></circle>
+                    <circle r="15" cx="402" cy="20" class="rapper-circle" style="fill: url(#Tony);"></circle>
+                </svg>
+                <h3 class="grouptitle">Los chikos del maíz</h3>
+                <p><em>Soy el rap que escucharia Hồ Chí Minh en la jungla.</em> Era de esperar que con una cantidad tan amplia de referencias en sus canciones iban a quedar en posiciones altas, y así ha sido el caso de Nega.</p>
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Total</th>
+                        <th>% Total</th>
+                        <th>Únicas</th>
+                        <th>% Únicas</th>
+                    </tr>
+                    <tr>
+                        <th>Nega</th>
+                        <td>12869</td>
+                        <td>55,60%</td>
+                        <td>4570</td>
+                        <td>35,51%</td>
+                    </tr>
+                    <tr>
+                        <th>Tony</th>
+                        <td>10277</td>
+                        <td>44,40%</td>
+                        <td>3190</td>
+                        <td>31,04%</td>
+                    </tr>
+                </table>
+                <p>Nega, además de hacer una mayor contribución a las letras del grupo, también tiene un ratio más alto de palabras únicas. No obstante, en conjunto las palabras más usadas no destacan en especial frente a otros grupos.</p>
+                <p>Palabras más repetidas: rap (57), tengo (50), ser (48), somos (45), vida (39), aunque (34), siempre (32), otro (29), sigo (28), eres (28).</p>
+                <svg id="group3" class="rapper-detail">
+                    <line x1="20%" y1="20" x2="80%" y2="20" />
+                    <circle r="15" cx="351" cy="20" class="rapper-circle" style="fill: url(#Lirico);"></circle>
+                    <circle r="15" cx="385" cy="20" class="rapper-circle" style="fill: url(#KaseO);"></circle>
+                    <circle r="15" cx="419" cy="20" class="rapper-circle" style="fill: url(#Hate);"></circle>
+                </svg>
+                <h3 class="grouptitle">Violadores del verso</h3>
+                <p>Pese a ser el grupo más aclamado, ninguno de sus miembros consigue ninguna posición destacable, pero ya sabemos que el rap no es solo vocabulario.</p>
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Total</th>
+                        <th>% Total</th>
+                        <th>Únicas</th>
+                        <th>% Únicas</th>
+                    </tr>
+                    <tr>
+                        <th>Lirico</th>
+                        <td>15861</td>
+                        <td>24,66%</td>
+                        <td>3913</td>
+                        <td>24,67%</td>
+                    </tr>
+                    <tr>
+                        <th>Kase O</th>
+                        <td>27414</td>
+                        <td>42,63%</td>
+                        <td>5943</td>
+                        <td>21,68%</td>
+                    </tr>
+                    <tr>
+                        <th>Hate</th>
+                        <td>21034</td>
+                        <td>32,70%</td>
+                        <td>5455</td>
+                        <td>24,93%</td>
+                    </tr>
+                </table>
+                <p>Kase O realiza una aportación bastante mayor, aunque también es cierto que tiene más canciones en solitario, lo que desvirtua los datos ampliamente. Lo que si es comparable es el porcentaje de palabras únicas, en el cual Javat cae al tercer puesto en el grupo. Pero le seguimos queriendo, ¿no?</p>
+                <p>Respecto a las palabras más usadas, lo he alargado un poco para incluir <em>co</em>, que aunque es previsible, no se da en otros grupos con sus respectivos <em>illos</em>, <em>chacho</em> o similares.</p>
+                <p>Palabras más repetidas: rap (241), tengo (159), todo (158), ser (147), nada (144), vida (144), mierda (133), siempre (119), hoy (117), bien (96), micro (93), co (93).</p>
+            </div>
+            <!-- Notas -->
+            <div class="wrap dataviz datavizhiphop">
+                <p>Ya por finalizar, aunque han sido bastantes horas preparando esta visualización, han sido momentos muy agradables, no solo por el tema del diseño y la programación, si no también por haber reescuchado canciones conocidas y descubierto algunas nuevas. Y porque al final, con los datos en la mano, <em>Andalucía manda</em>.</p>
+                <p>Fuentes:<br>
+                    <a href="http://experiments.undercurrent.com/">The Largest Vocabulary in HipHop</a> para la idea y el estilo de la visualización.<br>
+                    <a href="http://fiddle.jshell.net/6cW9u/8/">Jsfiddle</a> de Amelia Bellamy-Royds para parte del código de D3.js.<br>
+                    <a href="http://www.localwisdom.com/blog/2014/01/get-trend-line-javascript-graph-linear-regression/">Local Wisdom</a> para sacar la regresión lineal en javascript<br>
+                    <a href="https://www.gutenberg.org/">Proyecto Gutenberg</a> para la obtención de los libros en texto de plano de El Quijote y demás.<br>
+                    <a href="http://www.musica.com/">Musica.com</a>, <a href="http://www.letrasmania.com/">Letramania.com</a> y <a href="http://www.hhgroups.com">HHGroups</a> para las letras de las canciones.<br>
+                </p>
+            </div>
+            <script>
+            var margin = { top: 30, right: 20, bottom: 30, left: 40 },
+                width = parseInt(d3.select('.grafico').style('width'), 10),
+                width = width - margin.left - margin.right,
+                height = 420 - margin.top - margin.bottom,
+                radio = 7;
+
+            var xScaleScaler = d3.scale.linear()
+                .range([0, width]);
+
+            var yScaleScaler = d3.scale.linear()
+                .range([height, 0]);
+
+            var xScaleBar = d3.scale.ordinal()
+                .rangeRoundBands([0, width], .1);
+
+
+            var yScaleBar = d3.scale.linear()
+                .range([height, 0]);
+
+            ///////////////////////////////////////////////  
+
+            var xAxisScaler = d3.svg.axis()
+                .scale(xScaleScaler)
+                .orient("bottom");
+
+            var yAxisScaler = d3.svg.axis()
+                .scale(yScaleScaler)
+                .orient("left");
+
+            /* var xAxisBar = d3.svg.axis()
+                .scale(xScaleBar)
+                .orient("bottom"); */
+
+            var yAxisBar = d3.svg.axis()
+                .scale(yScaleBar)
+                .orient("left")
+                .tickFormat(d3.format(".0%"))
+                .ticks(10);
+
+            ///////////////////////////////////////////////
+
+            var svgscaler = d3.select("#scalerplot").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            var svgbar = d3.select("#barplot").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            var patterns = svgscaler.append('svg:defs');
+
+
+
+            d3.csv("assets/data/ArtistasH_all.csv", function(error, data) {
+                data.forEach(function(d) {
+                    d.PUnica = +d.PUnica;
+                    d.PUnica20 = +d.PUnica20;
+                    d.PTotal = +d.PTotal;
+                });
+
+                function linearRegression(y, x) {
+                    var lr = {};
+                    var n = y.length;
+                    var sum_x = 0;
+                    var sum_y = 0;
+                    var sum_xy = 0;
+                    var sum_xx = 0;
+                    var sum_yy = 0;
+
+                    for (var i = 0; i < y.length; i++) {
+                        sum_x += x[i];
+                        sum_y += y[i];
+                        sum_xy += (x[i] * y[i]);
+                        sum_xx += (x[i] * x[i]);
+                        sum_yy += (y[i] * y[i]);
+                    }
+
+                    lr['slope'] = (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x);
+                    lr['intercept'] = (sum_y - lr.slope * sum_x) / n;
+                    lr['r2'] = Math.pow((n * sum_xy - sum_x * sum_y) / Math.sqrt((n * sum_xx - sum_x * sum_x) * (n * sum_yy - sum_y * sum_y)), 2);
+
+                    return lr;
+                }
+
+                function mediaRegression(y, x) {
+                    var media = {};
+                    var sum_x = 0;
+                    var sum_y = 0;
+                    var n = y.length;
+
+                    for (var i = 0; i < y.length; i++) {
+                        sum_x += x[i];
+                        sum_y += y[i];
+                    }
+
+                    media['x'] = sum_x / n;
+                    media['y'] = sum_y / n;
+                    return media;
+                }
+
+                var known_y = data.map(function(d) {
+                    return parseFloat(d.PUnica);
+                });
+                var known_x = data.map(function(d) {
+                    return parseFloat(d.PTotal);
+                });
+                var known_y20 = data.map(function(d) {
+                    return parseFloat(d.PUnica / d.PTotal);
+                });
+                var lr = linearRegression(known_y, known_x);
+                var max = d3.max(data, function(d) {
+                    return d.PTotal;
+                });
+                var media = mediaRegression(known_y, known_x)
+                var media20 = mediaRegression(known_y20, known_x)
+
+                xScaleScaler.domain([0, d3.max(data, function(d) {
+                    return d.PTotal;
+                })]);
+                yScaleScaler.domain([0, d3.max(data, function(d) {
+                    return d.PUnica;
+                })]);
+                //xScaleBar.domain(data.map(function(d) { return d.ID; }));
+                yScaleBar.domain([0, d3.max(data, function(d) {
+                    return d.PUnica / d.PTotal;
+                })]);
+
+                var x0 = xScaleBar.domain(data.sort(function(a, b) {
+                            return (b.PUnica / b.PTotal) - (a.PUnica / a.PTotal);
+                        })
+                        .map(function(d) {
+                            return d.PUnica / d.PTotal;
+                        }))
+                    .copy();
+
+                svgscaler.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxisScaler)
+                    .append("text")
+                    .attr("class", "label")
+                    .attr("x", width)
+                    .attr("y", -6)
+                    .attr("text-anchor", "end")
+                    .text("Palabras totales");
+
+                svgscaler.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxisScaler)
+                    .append("text")
+                    .attr("class", "label")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", ".71em")
+                    .style("text-anchor", "end")
+                    .text("Palabras Ãºnicas")
+
+
+                // BAR RECTANGULOS
+                svgbar.append("g").selectAll(".bar")
+                    .data(data)
+                    .enter()
+                    .append("rect")
+                    .attr('class', function(d) {
+                        return 'bar' + d.Region + ' barrect';
+                    })
+                    .attr("height", function(d) {
+                        return height - yScaleBar(d.PUnica / d.PTotal);
+                    })
+                    .attr("width", xScaleBar.rangeBand())
+                    .attr("y", function(d) {
+                        return yScaleBar(d.PUnica / d.PTotal);
+                    })
+                    .attr("x", function(d) {
+                        return x0(d.PUnica / d.PTotal);
+                    });
+
+                // BAR NOMBRE GRUPOS
+                svgbar.selectAll(".text")
+                    .data(data)
+                    .enter()
+                    .append("text")
+                    .attr("class", "bartext")
+                    .attr("transform", function(d, i) {
+                        return "translate(" + (((xScaleBar.rangeBand() / 2) + 3) + x0(d.PUnica / d.PTotal)) + ", " + (height - 4) + ")" + "rotate(-90)";
+                    })
+                    .text(function(d) {
+                        return d.Cantante;
+                    })
+
+                // BAR LINEA MEDIA
+                svgbar.append('line')
+                    .attr("x1", 0)
+                    .attr("y1", yScaleBar(media20['y']))
+                    .attr("x2", width)
+                    .attr("y2", yScaleBar(media20['y']))
+                    .attr("class", "regressionline");
+
+                // BAR LINEA MEDIA TEXTO
+                var mediatextbar = svgbar.append("text")
+                    .attr("class", "textaxis")
+                    .attr("y", yScaleBar(media20['y']) - 12)
+                    .attr("x", width)
+                    .attr("dy", ".71em")
+                    .style("text-anchor", "end");
+
+                mediatextbar.append('tspan').text('MEDIA:');
+                mediatextbar.append('tspan').attr('dx', 10).attr("class", "quijoaxis").text(d3.round(media20['y'] * 100, 2));
+                mediatextbar.append('tspan').attr("class", "quijoaxis").text('%');
+                mediatextbar.append('tspan').text(' PALABRAS ÃšNICAS');
+
+                // BAR Y AXIS  
+                svgbar.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxisBar)
+                    .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", ".71em")
+                    .style("text-anchor", "end")
+                    .text("% Ãºnicas/totales");
+
+
+                patterns.append('defs').selectAll("pattern")
+                    .data(data)
+                    .enter()
+                    .append("pattern")
+                    .attr("id", function(d) {
+                        return d.ID + "pqn";
+                    })
+                    .attr("width", radio * 2)
+                    .attr("height", radio * 2)
+                    .attr("patternUnits", "objectBoundingBox")
+                    .append("image")
+                    .attr("xlink:href", function(d) {
+                        return 'assets/img/' + d.ID + '.jpg';
+                    })
+                    .attr("width", radio * 2).attr("height", radio * 2).attr("x", 0).attr("y", 0);
+
+
+                svgscaler.append("g").append("line")
+                    .attr("x1", xScaleScaler(0))
+                    .attr("y1", yScaleScaler(lr.intercept))
+                    .attr("x2", xScaleScaler(max))
+                    .attr("y2", yScaleScaler((max * lr.slope) + lr.intercept))
+                    .attr("class", "regressionline");
+
+                var mediatext = svgscaler.append("g").append("text")
+                    .attr("class", "textaxis")
+                    .attr("y", height - 28)
+                    .attr("x", width)
+                    .attr("dy", ".71em")
+                    .style("text-anchor", "end");
+
+                mediatext.append('tspan').text('MEDIA:');
+                mediatext.append('tspan').attr('dx', 10).attr("class", "quijoaxis").text(d3.round(media['x']));
+                mediatext.append('tspan').text(' P. TOTALES');
+                mediatext.append('tspan').attr('dx', 10).attr("class", "quijoaxis").text(d3.round(media['y']));
+                mediatext.append('tspan').text(' P. ÃšNICAS');
+                mediatext.append('tspan').attr('dx', 10).attr("class", "quijoaxis").text(d3.round(media['y'] / media['x'], 3));
+                mediatext.append('tspan').text(' P. ÃšNICAS/TOTALES');
+
+                svgscaler.selectAll(".dot")
+                    .data(data)
+                    .enter().append("circle")
+                    .attr("class", function(d) {
+                        return d.Region + ' rapper-circle';
+                    })
+                    .attr("r", radio)
+                    .attr("cx", function(d) {
+                        return xScaleScaler(d.PTotal);
+                    })
+                    .attr("cy", function(d) {
+                        return yScaleScaler(d.PUnica);
+                    })
+                    .style("fill", function(d) {
+                        return "url(#" + d.ID + "pqn)";
+                    })
+                    .on("mouseover", function(d) {
+                        var coordinates = [0, 0];
+                        coordinates = d3.mouse(this);
+                        var x = coordinates[0];
+                        var y = coordinates[1];
+                        d3.select(".tooltipscaler")
+                            .style("left", x + "px")
+                            .style("top", y + "px")
+                            .style("margin-top", "160px")
+                            .select("#value")
+                            .text(d.PUnica);
+                        d3.select(".tooltipscaler")
+                            .select("#rapper")
+                            .text(d.Cantante);
+                        d3.select(".tooltipscaler")
+                            .select("#value2")
+                            .text(d.PTotal);
+                        d3.select(".tooltipscaler").classed("hidden", false);
+                    })
+
+                    .on("mouseout", function() {
+                        d3.select(".tooltipscaler").classed("hidden", true);
+                    })
+
+
+                var legend = svgscaler.selectAll(".legend")
+                    .data(color.domain())
+                    .enter().append("g")
+                    .attr("class", "legend")
+                    .attr("transform", function(d, i) {
+                        return "translate(0," + i * 20 + ")";
+                    });
+
+                legend.append("rect")
+                    .attr("x", width - 18)
+                    .attr("width", 18)
+                    .attr("height", 18)
+                    .style("fill", color);
+
+                legend.append("text")
+                    .attr("x", width - 24)
+                    .attr("y", 9)
+                    .attr("dy", ".35em")
+                    .style("text-anchor", "end")
+                    .text(function(d) {
+                        return d;
+                    });
+
+            });
+
+
+            d3.csv("assets/data/ArtistasH_all.csv", function(error, datac) {
+                var svg = d3.select("#rapper-circles svg");
+                var margin = 50;
+                var radius = 15;
+                var padding = 3;
+                var biggestFirst = true;
+                var escala = 10000;
+
+                var baselineHeight = height / 2;
+
+                datac.forEach(function(d) {
+                    d.x = +d.PUnicaLim / escala;
+                });
+
+                var xScale = d3.scale.linear()
+                    .range([0, width])
+                    .domain([d3.min(datac, function(d) {
+                        return d.x - 0.02;
+                    }), d3.max(datac, function(d) {
+                        return d.x + 0.01;
+                    })]);
+
+                var threads = svg.append("g")
+                    .attr("class", "threads");
+
+                var bubbleLine = svg.append("g")
+                    .attr("class", "bubbles")
+                    .attr("transform",
+                        "translate(0," + baselineHeight + ")");
+
+                bubbleLine.append("line")
+                    .attr("x1", xScale.range()[0])
+                    .attr("x2", xScale.range()[1])
+                    .attr("class", "midaxis");
+
+                bubbleLine.append("line").attr("x1", xScale(0.14)).attr("x2", xScale(0.14)).attr("y1", -baselineHeight + 30).attr("y2", baselineHeight).attr("class", "countaxis");
+                bubbleLine.append("line").attr("x1", xScale(0.17)).attr("x2", xScale(0.17)).attr("y1", -baselineHeight + 30).attr("y2", baselineHeight).attr("class", "countaxis");
+                bubbleLine.append("line").attr("x1", xScale(0.20)).attr("x2", xScale(0.20)).attr("y1", -baselineHeight + 30).attr("y2", baselineHeight).attr("class", "countaxis");
+                bubbleLine.append("line").attr("x1", xScale(0.23)).attr("x2", xScale(0.23)).attr("y1", -baselineHeight + 30).attr("y2", baselineHeight).attr("class", "countaxis");
+
+                bubbleLine.append("text").attr("class", "textaxis").attr("y", -baselineHeight + 10).attr("x", xScale(0.14)).attr("dy", ".71em").style("text-anchor", "middle").text("1.400 PALABRAS");
+                bubbleLine.append("text").attr("class", "textaxis").attr("y", -baselineHeight + 10).attr("x", xScale(0.17)).attr("dy", ".71em").style("text-anchor", "middle").text("1.700");
+                bubbleLine.append("text").attr("class", "textaxis").attr("y", -baselineHeight + 10).attr("x", xScale(0.20)).attr("dy", ".71em").style("text-anchor", "middle").text("2.000");
+                bubbleLine.append("text").attr("class", "textaxis").attr("y", -baselineHeight + 10).attr("x", xScale(0.23)).attr("dy", ".71em").style("text-anchor", "middle").text("2.300");
+
+                bubbleLine.append("line").attr("x1", xScale(0.1488)).attr("x2", xScale(0.1488)).attr("y1", -baselineHeight + 60).attr("y2", baselineHeight - 60).attr("class", "countaxis countquijo");
+                bubbleLine.append("text").attr("class", "textaxis quijoaxis").attr("y", -baselineHeight + 44).attr("x", xScale(0.1488)).attr("dy", ".71em").style("text-anchor", "middle").text("EL QUIJOTE");
+
+                bubbleLine.append("line").attr("x1", xScale(0.1653)).attr("x2", xScale(0.1653)).attr("y1", -baselineHeight + 60).attr("y2", baselineHeight - 60).attr("class", "countaxis countquijo");
+                bubbleLine.append("text").attr("class", "textaxis quijoaxis").attr("y", -baselineHeight + 32).attr("x", xScale(0.1653)).attr("dy", ".71em").style("text-anchor", "middle").text("ZALACAÃN");
+                bubbleLine.append("text").attr("class", "textaxis quijoaxis").attr("y", -baselineHeight + 44).attr("x", xScale(0.1653)).attr("dy", ".71em").style("text-anchor", "middle").text("EL AVENTURERO");
+
+                var quadtree = d3.geom.quadtree()
+                    .x(function(d) {
+                        return xScale(d.x);
+                    })
+                    .y(0)
+                    .extent([
+                        [xScale(-1), 0],
+                        [xScale(2), 0]
+                    ]);
+
+                var quadroot = quadtree([]);
+
+                function findNeighbours(root, scaledX, scaledR, maxR) {
+                    var neighbours = [];
+                    root.visit(function(node, x1, y1, x2, y2) {
+                        var p = node.point;
+                        if (p) {
+                            var overlap, x2 = xScale(p.x),
+                                r2 = radius;
+                            if (x2 < scaledX) {
+                                overlap = (x2 + r2 + padding >= scaledX - scaledR);
+                            } else {
+                                overlap = (scaledX + scaledR + padding >= x2 - r2);
+                            }
+                            if (overlap) neighbours.push(p);
+                        }
+                        return (x1 - maxR > scaledX + scaledR + padding) && (x2 + maxR < scaledX - scaledR - padding);
+                    });
+                    return neighbours;
+                }
+
+                function calculateOffset(maxR) {
+                    return function(d) {
+                        neighbours = findNeighbours(quadroot, xScale(d.x), radius, maxR);
+                        var n = neighbours.length;
+                        var upperEnd = 0,
+                            lowerEnd = 0;
+                        if (n) {
+                            var j = n,
+                                occupied = new Array(n);
+                            while (j--) {
+                                var p = neighbours[j];
+                                var hypoteneuse = 2 * radius + padding;
+                                var base = xScale(d.x) - xScale(p.x);
+                                var vertical = Math.sqrt(Math.pow(hypoteneuse, 2) - Math.pow(base, 2));
+                                occupied[j] = [p.offset + vertical, p.offset - vertical];
+                            }
+                            occupied = occupied.sort(function(a, b) {
+                                return a[0] - b[0];
+                            });
+                            lowerEnd = upperEnd = 1 / 0;
+                            j = n;
+                            while (j--) {
+                                if (lowerEnd > occupied[j][0]) {
+                                    upperEnd = Math.min(lowerEnd, occupied[j][0]);
+                                    lowerEnd = occupied[j][1];
+                                } else {
+                                    lowerEnd = Math.min(lowerEnd, occupied[j][1]);
+                                }
+                            }
+                        }
+                        return d.offset = (Math.abs(upperEnd) < Math.abs(lowerEnd)) ? upperEnd : lowerEnd;
+                    };
+                }
+
+                bubbleLine.selectAll("circle")
+                    .data(datac.sort(biggestFirst ? function(a, b) {
+                        return b.r - a.r;
+                    } : function(a, b) {
+                        return a.r - b.r;
+                    }))
+                    .enter()
+                    .append("circle")
+                    .attr("r", radius)
+                    .each(function(d, i) {
+                        d3.select(this)
+                            .attr("cx", xScale(d.x))
+                            .attr("cy", -baselineHeight)
+                            .attr("cy", calculateOffset(0))
+                            .attr("class", function(d) {
+                                return d.Region + ' rapper-circle';
+                            })
+                            .style("fill", function() {
+                                return "url(#" + d.ID + ")";
+                            });
+                        quadroot.add(d);
+                    })
+                    .on("mouseover", function(d) {
+                        var coordinates = [0, 0];
+                        coordinates = d3.mouse(this);
+                        var x = coordinates[0];
+                        var y = coordinates[1];
+                        d3.select(".tooltipcircle")
+                            .style("left", x + "px")
+                            .style("top", y + "px")
+                            .style("margin-top", "150px")
+                            .select("#value")
+                            .text(function() {
+                                return d3.round(d.x * escala);
+                            });
+                        d3.select(".tooltipcircle")
+                            .select("#rapper")
+                            .text(d.Cantante);
+                        d3.select(".tooltipcircle").classed("hidden", false);
+                    })
+                    .on("mouseout", function() {
+                        d3.select(".tooltipcircle").classed("hidden", true);
+                    });
+
+                var backgrounds = bubbleLine.append('svg:defs');
+
+                backgrounds.selectAll("pattern")
+                    .data(datac)
+                    .enter()
+                    .append("pattern")
+                    .attr("id", function(d) {
+                        return d.ID;
+                    })
+                    .attr("width", radius * 2)
+                    .attr("height", radius * 2)
+                    .attr("patternUnits", "objectBoundingBox")
+                    .append("image")
+                    .attr("xlink:href", function(d) {
+                        return 'assets/img/' + d.ID + '.jpg';
+                    })
+                    .attr("width", radius * 2).attr("height", radius * 2).attr("x", 0).attr("y", 0);
+
+            });
+
+            d3.selectAll(".regionselect")
+                .on("click", function(d) {
+                    d3.selectAll(".andalucia").classed("andaluz", true).classed("rapper-circle", false);
+                    d3.selectAll(".aragon").classed("aragones", true).classed("rapper-circle", false);
+                    d3.selectAll(".catalunya").classed("catalan", true).classed("rapper-circle", false);
+                    d3.selectAll(".madrid").classed("madrileno", true).classed("rapper-circle", false);
+                    d3.selectAll(".valencia").classed("valenciano", true).classed("rapper-circle", false);
+                    d3.selectAll(".leyenda").style("display", "initial");
+                });
+            d3.selectAll(".allselect")
+                .on("click", function(d) {
+                    d3.selectAll(".andalucia").classed("andaluz", false).classed("rapper-circle", true);
+                    d3.selectAll(".aragon").classed("aragones", false).classed("rapper-circle", true);
+                    d3.selectAll(".catalunya").classed("catalan", false).classed("rapper-circle", true);
+                    d3.selectAll(".madrid").classed("madrileno", false).classed("rapper-circle", true);
+                    d3.selectAll(".valencia").classed("valenciano", false).classed("rapper-circle", true);
+                    d3.selectAll(".leyenda").style("display", "none");
+                });
+            </script>
+        </div>
+
+        <div class="footer">
+            <div class="footer-wrap">
+                <div>Hecho con <span class="heart">♥</span> por <a href="https://www.dadasign.xyz">dadasign</a></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
